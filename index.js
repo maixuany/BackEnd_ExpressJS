@@ -7,7 +7,8 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const URI_DB = process.env.URL_MONGODB;
 
-const router = require('./routes/index')
+const router = require('./routes/index');
+const authRouter = require("./middleware/routes");
 
 const app = express();
 
@@ -26,7 +27,8 @@ mongoose
     console.log("Error Connecting to Database "+ error);
   });
 
-app.use("/", router);
+app.use("/auth", authRouter);
+app.use("/api/v1", router);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
